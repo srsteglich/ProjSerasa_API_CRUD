@@ -1,0 +1,72 @@
+package com.serasa.projeto.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.serasa.projeto.modelo.Clinica;
+import com.serasa.projeto.repositorio.RepositorioClinica;
+
+@Controller
+public class Controler {
+	
+	@Autowired
+	private RepositorioClinica repositorioClinica;
+		    
+	@GetMapping("ola")
+	@ResponseBody
+	public String olaSerasa() {
+		return " Olá, Serasa.... Sou Sérgio R. Steglich ";
+	}
+	
+	  
+	@GetMapping("clinicas")
+	@ResponseBody
+	public List<Clinica> listar() {	
+		
+		return repositorioClinica.findAll();
+	}
+	
+	
+//	@PostMapping
+//	@ResponseStatus(value = HttpStatus.CREATED)
+//	public void adicionar(@RequestBody Clinica clinica) {
+//		
+//		repositorioClinica.save(clinica);
+//	}
+	
+	@PostMapping
+	@ResponseStatus(value = HttpStatus.CREATED)	
+	public Clinica adicionar(@RequestBody Clinica clinica)   {
+		return repositorioClinica.save(clinica);
+	}
+	
+	@DeleteMapping("/{clinicaId}")
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public void remover(Long clinicaId) {
+		repositorioClinica.deleteById(clinicaId);
+	}
+	
+	
+	@GetMapping("/{clinicaId}")
+	public ResponseEntity<Clinica> buscar (Long clinicaId) {
+		
+		Optional<Clinica> clinica = repositorioClinica.findById(clinicaId);
+		
+		return null;
+	}
+	
+	
+	
+	
+}

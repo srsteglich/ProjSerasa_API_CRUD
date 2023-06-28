@@ -1,0 +1,15 @@
+package com.serasa.projeto.controller;
+
+public class EspecialidadeControle {
+
+	@Controller
+	public class EspecialidadeControle {
+
+		@Autowired
+		private RepositEspecialidade repositEspecialidade;
+		
+		@GetMapping
+		public List<Especialidade> listar() {
+			return repositEspecialidade.findAll();
+		}
+}
